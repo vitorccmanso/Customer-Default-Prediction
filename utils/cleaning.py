@@ -161,14 +161,14 @@ class DiscrepancyIdentifier:
                 return state
         return None
 
-    def identify_discrepancies(self, df, ddd_column='DDD', cep_column='CEP_2_DIG'):
+    def identify_discrepancies(self, df, ddd_column="DDD", cep_column="CEP_2_DIG"):
         """
         Identifies discrepancies between DDD and CEP state codes in the given DataFrame
 
         Parameters:
         - df (pd.DataFrame): The DataFrame containing DDD and CEP columns
-        - ddd_column (str): The name of the DDD column. Defaults to 'DDD'
-        - cep_column (str): The name of the CEP column. Defaults to 'CEP_2_DIG'
+        - ddd_column (str): The name of the DDD column. Defaults to "DDD"
+        - cep_column (str): The name of the CEP column. Defaults to "CEP_2_DIG"
 
         Returns:
         - pd.DataFrame: A DataFrame containing rows with discrepancies
@@ -176,77 +176,77 @@ class DiscrepancyIdentifier:
         df_discrepancies = df.copy()
         
         # Convert DDD to numeric
-        df_discrepancies['DDD'] = pd.to_numeric(df_discrepancies[ddd_column], errors='coerce')
+        df_discrepancies["DDD"] = pd.to_numeric(df_discrepancies[ddd_column], errors="coerce")
            
         # Add state columns
-        df_discrepancies['ESTADO_CEP'] = df_discrepancies[cep_column].map(self.cep_to_state)
-        df_discrepancies['ESTADO_DDD'] = df_discrepancies['DDD'].apply(self.get_state_from_ddd)
+        df_discrepancies["ESTADO_CEP"] = df_discrepancies[cep_column].map(self.cep_to_state)
+        df_discrepancies["ESTADO_DDD"] = df_discrepancies["DDD"].apply(self.get_state_from_ddd)
         
         # Identify discrepancies
         return df_discrepancies[
-            (df_discrepancies['ESTADO_CEP'].notna()) & 
-            (df_discrepancies['ESTADO_DDD'].notna()) & 
-            (df_discrepancies['ESTADO_CEP'] != df_discrepancies['ESTADO_DDD'])
+            (df_discrepancies["ESTADO_CEP"].notna()) & 
+            (df_discrepancies["ESTADO_DDD"].notna()) & 
+            (df_discrepancies["ESTADO_CEP"] != df_discrepancies["ESTADO_DDD"])
         ] 
 
 class CleaningFinalDataFrames:
     """
-    A class to perform data cleaning operations on DataFrames, such as filling missing values with median values based on grouping by 'ID_CLIENTE'
+    A class to perform data cleaning operations on DataFrames, such as filling missing values with median values based on grouping by "ID_CLIENTE"
 
     Attributes:
-    - median_values (dict): A dictionary to store median values for columns, keyed by 'ID_CLIENTE'
+    - median_values (dict): A dictionary to store median values for columns, keyed by "ID_CLIENTE"
 
     Methods:
     - __init__: Initializes the class with the main DataFrame where missing values need to be filled
-    - calculate_medians: Calculates the median values for a specified column, grouped by 'ID_CLIENTE', from the provided DataFrame (data)
-    - fill_missing_with_input: Helper method to fill missing values in a row based on median values from 'input_dict'
-    - fill_missing_values: Fills missing values for the specified columns using the median values grouped by 'ID_CLIENTE', from the provided DataFrame (data)
+    - calculate_medians: Calculates the median values for a specified column, grouped by "ID_CLIENTE", from the provided DataFrame (data)
+    - fill_missing_with_input: Helper method to fill missing values in a row based on median values from "input_dict"
+    - fill_missing_values: Fills missing values for the specified columns using the median values grouped by "ID_CLIENTE", from the provided DataFrame (data)
     """
     def __init__(self):
         """
         Initializes the class with the main DataFrame where missing values need to be filled
 
         Parameters:
-        - median_values (dict): A dictionary to store median values for columns, keyed by 'ID_CLIENTE'
+        - median_values (dict): A dictionary to store median values for columns, keyed by "ID_CLIENTE"
         """
         self.median_values = {}
 
     def calculate_medians(self, data_median, column_name):
         """
-        Calculates the median values for a specified column, grouped by 'ID_CLIENTE', from the provided DataFrame (data_median)
+        Calculates the median values for a specified column, grouped by "ID_CLIENTE", from the provided DataFrame (data_median)
 
         Parameters:
         - data_median (DataFrame): The DataFrame to use for calculating medians
         - column_name (str): The column for which the median is calculated
 
         Returns:
-        - dict: A dictionary with median values keyed by 'ID_CLIENTE'
+        - dict: A dictionary with median values keyed by "ID_CLIENTE"
         """
-        return data_median.groupby('ID_CLIENTE')[column_name].median()
+        return data_median.groupby("ID_CLIENTE")[column_name].median()
 
     def fill_missing_with_input(self, row, input_dict, column_name):
         """
-        Helper method to fill missing values in a row based on median values from 'input_dict'
+        Helper method to fill missing values in a row based on median values from "input_dict"
 
         Parameters:
         - row (Series): A row of the DataFrame
-        - input_dict (dict): A dictionary containing median values keyed by 'ID_CLIENTE'
+        - input_dict (dict): A dictionary containing median values keyed by "ID_CLIENTE"
         - column_name (str): The name of the column to fill
 
         Returns:
         - Value: The original or filled value for the column
         """
         if pd.isnull(row[column_name]):
-            return input_dict.get(row['ID_CLIENTE'], row[column_name])
+            return input_dict.get(row["ID_CLIENTE"], row[column_name])
         return row[column_name]
 
     def fill_missing_values(self, df, columns_to_fill, data_median):
         """
-        Fills missing values for the specified columns using the median values grouped by 'ID_CLIENTE', from the provided DataFrame (data_median)
+        Fills missing values for the specified columns using the median values grouped by "ID_CLIENTE", from the provided DataFrame (data_median)
 
         Parameters:
         - df (Dataframe): The main DataFrame where missing values need to be filled
-        - columns_to_fill (dict): A dictionary where keys are column names and values are the names of the corresponding columns in 'data_median' to calculate medians
+        - columns_to_fill (dict): A dictionary where keys are column names and values are the names of the corresponding columns in "data_median" to calculate medians
         - data_median (DataFrame): The DataFrame to use for calculating median values for filling missing data
 
         Returns:
