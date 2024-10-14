@@ -1,6 +1,6 @@
 import pandas as pd
 import os
-
+import pickle
 class DiscrepancyIdentifier:
     """
     A class to identify discrepancies between DDD (area code) and CEP (postal code) states in a given DataFrame
@@ -11,6 +11,7 @@ class DiscrepancyIdentifier:
 
     Methods:
     - __init__: Initializes the DiscrepancyIdentifier with the provided mappings
+    - save_maps: Saves the mappings to a file
     - get_state_from_ddd: Gets the state abbreviation corresponding to a DDD code
     - identify_discrepancies: Identifies discrepancies between DDD and CEP state codes in the given DataFrame
     """ 
@@ -143,6 +144,21 @@ class DiscrepancyIdentifier:
             "90": "RS", "91": "RS", "92": "RS", "93": "RS", "94": "RS", 
             "95": "RS", "96": "RS", "97": "RS", "98": "RS", "99": "RS"
         }
+
+    def save_maps(self):
+        """
+        Saves the mappings to a file
+        """
+        if not os.path.exists("../artifacts"):
+            os.makedirs("../artifacts")
+        combined_mappings = {
+            'state_to_ddd': self.state_to_ddd,
+            'cep_to_state': self.cep_to_state
+        }
+
+        # Save the combined mappings to a single .pkl file
+        with open('../artifacts/combined_mappings.pkl', 'wb') as f:
+            pickle.dump(combined_mappings, f)
 
     def get_state_from_ddd(self, ddd):
         """
