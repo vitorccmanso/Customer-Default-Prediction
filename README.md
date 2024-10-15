@@ -116,6 +116,8 @@ After the training, the models were evaluated in terms of the metrics `Recall`, 
 
 In this project, a high `Recall` is important, since a low number of false negatives indicates a low chance of losing a lot of money with defaulting clients. But this is useless if the precision is extremely low. Because of this, both `Recall` and `f1` were used as the focus of the model training, each metric being the focus of a separate training. With this, a threshold analysis was made to check whether changing the models threshold could improve its results. To train the models, a repo in DagsHub was used, along with MLflow to keep track of all the information about them.
 
+To see the complete Model Training step, please check the [Model Training Notebook](https://github.com/vitorccmanso/Customer-Default-Prediction/blob/main/Notebooks/Model%20Training.ipynb).
+
 ### Model performance and Selection
 After all four trainings were complete (focus on recall or f1, and smote applied or not), three models were the clear best performers, with a low number of errors (false positives + false negatives) and good values for `Recall` and `Precision`. They were the **Gradient Boosting** trained with a focus on `Recall` and without `SMOTE`, and the **Random Forest** and **Gradient Boosting** both trained with a focus on `Recall` and with `SMOTE` applied.
 
