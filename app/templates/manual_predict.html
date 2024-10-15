@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Defaulting Customer Prediction - Manual Data</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {background-color: #eff2f9;}
+
+        body .table thead th,
+        body .table tbody td,
+        body .table tbody th {
+            background-color: #eff2f9;
+        }
+    </style>
+</head>
+
+<body class="container mt-5">
+
+    <h1 class="mb-4">Defaulting Customer Prediction - Manual Data</h1>
+    <form id="manualForm" action="/manual_predict" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="ID_CLIENTE" class="form-label">ID_CLIENTE:</label>
+            <input type="number" class="form-control" name="ID_CLIENTE"  min="0" step="any" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="SAFRA_REF" class="form-label">SAFRA_REF:</label>
+            <input type="month" class="form-control" name="SAFRA_REF" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="DATA_EMISSAO_DOCUMENTO" class="form-label">DATA_EMISSAO_DOCUMENTO:</label>
+            <input type="date" class="form-control" name="DATA_EMISSAO_DOCUMENTO" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="DATA_VENCIMENTO" class="form-label">DATA_VENCIMENTO:</label>
+            <input type="date" class="form-control" name="DATA_VENCIMENTO" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="VALOR_A_PAGAR" class="form-label">VALOR_A_PAGAR:</label>
+            <input type="number" class="form-control" name="VALOR_A_PAGAR" min="0" step="any" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="TAXA" class="form-label">TAXA:</label>
+            <input type="number" class="form-control" name="TAXA" min="0" step="any" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="DATA_CADASTRO" class="form-label">DATA_CADASTRO:</label>
+            <input type="date" class="form-control" name="DATA_CADASTRO" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="DDD" class="form-label">DDD</label>
+            <input type="number" class="form-control" name="DDD" min="0" max="99" step="any" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="FLAG_PF" class="form-label">FLAG_PF</label>
+            <select class="form-control" name="FLAG_PF" placeholder="Selecione se é pessoa física" required>
+                <option class="placeholder" selected disabled value="">Selecione se é pessoa física</option>
+                <option value="Sim">
+                    Sim
+                </option>
+                <option value="Não">
+                    Não
+                </option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="SEGMENTO_INDUSTRIAL" class="form-label">SEGMENTO_INDUSTRIAL</label>
+            <select class="form-control" name="SEGMENTO_INDUSTRIAL" placeholder="Selecione o segmento industrial da empresa" required>
+                <option class="placeholder" selected disabled value="">Selecione o segmento industrial da empresa</option>
+                <option value="Serviços">
+                    Serviços
+                </option>
+                <option value="Comércio">
+                    Comércio
+                </option>
+                <option value="Indústria">
+                    Indústria
+                </option>
+                <option value="Unknown">
+                    DESCONHECIDO
+                </option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="DOMINIO_EMAIL" class="form-label">DOMINIO_EMAIL</label>
+            <select class="form-control" name="DOMINIO_EMAIL" placeholder="Selecione o domínio do email" required>
+                <option class="placeholder" selected disabled value="">Selecione o domínio do email</option>
+                <option value="YAHOO">
+                    YAHOO
+                </option>
+                <option value="GMAIL">
+                    GMAIL
+                </option>
+                <option value="HOTMAIL">
+                    HOTMAIL
+                </option>
+                <option value="OUTLOOK">
+                    OUTLOOK
+                </option>
+                <option value="AOL">
+                    AOL
+                </option>
+                <option value="BOL">
+                    BOL
+                </option>
+                <option value="Unknown">
+                    DESCONHECIDO
+                </option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="PORTE" class="form-label">PORTE</label>
+            <select class="form-control" name="PORTE" placeholder="Selecione o porte da empresa" required>
+                <option class="placeholder" selected disabled value="">Selecione o porte da empresa</option>
+                <option value="PEQUENO">
+                    PEQUENO
+                </option>
+                <option value="MEDIO">
+                    MÉDIO
+                </option>
+                <option value="GRANDE">
+                    GRANDE
+                </option>
+                <option value="Unknown">
+                    DESCONHECIDO
+                </option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="CEP_2_DIG" class="form-label">CEP_2_DIG</label>
+            <input type="number" class="form-control" name="CEP_2_DIG" min="0" max="99" step="any" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="RENDA_MES_ANTERIOR" class="form-label">RENDA_MES_ANTERIOR</label>
+            <input type="number" class="form-control" name="RENDA_MES_ANTERIOR" min="0" step="any" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="NO_FUNCIONARIOS" class="form-label">NO_FUNCIONARIOS</label>
+            <input type="number" class="form-control" name="NO_FUNCIONARIOS" min="0" step="any" required>
+        </div>
+
+        <div class="mb-3 d-flex">
+            <button type="submit" class="btn btn-primary me-2">Predict with manual data</button>
+            <a href="/" class="btn btn-secondary ms-2">Back</a>
+        </div>
+    </form>
+    {% if results %}
+    <div class="mt-4">
+        <h2>Results:</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID_CLIENTE</th>
+                    <th scope="col">SAFRA_REF</th>
+                    <th scope="col">INADIMPLENTE</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in results %}
+                <tr>
+                    <td>{{ row.ID_CLIENTE }}</td>
+                    <td>{{ row.SAFRA_REF }}</td>
+                    <td>{{ row.INADIMPLENTE }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</body>
+</html>
