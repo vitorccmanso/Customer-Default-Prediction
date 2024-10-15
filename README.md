@@ -46,6 +46,3 @@ To achieve this objective, it was further broken down into the following technic
 5. To put the model into production with a web app
 
 ## Main Insights
-
-Open a web browser page and type `localhost` in the search bar. This app should load and be ready for usage. Use the datasets in the folder `Data for app usage` to test the `Predict with Dataset` function, or create your dataset based on the original data. Or, explore the `Predict with Manual Data` function, to manually input a row of data for the model to predict.
-
